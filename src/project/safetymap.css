@@ -1,0 +1,78 @@
+.sm-intro {
+  max-width: 36em;
+  margin-bottom: 24px;
+}
+
+.sm-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 28px;
+}
+
+.sm-map {
+  height: 480px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #ddd3e8;
+}
+
+.sm-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sm-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-weight: 700;
+  color: var(--plum);
+}
+
+.sm-form select,
+.sm-form textarea {
+  font: inherit;
+  font-weight: 400;
+  padding: 10px;
+  border: 1px solid #b9aacb;
+  border-radius: 6px;
+  color: var(--text);
+}
+
+.sm-form select:focus-visible,
+.sm-form textarea:focus-visible,
+.sm-form button:focus-visible {
+  outline: 3px solid var(--sand);
+  outline-offset: 2px;
+}
+
+.sm-form button {
+  border: none;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+}
+
+.sm-form button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.sm-place {
+  font-size: 0.95rem;
+}
+
+.sm-message {
+  font-weight: 700;
+  color: var(--plum);
+}
+
+@media (max-width: 800px) {
+  .sm-layout {
+    grid-template-columns: 1fr;
+  }
+  .sm-map {
+    height: 380px;
+  }
+}
