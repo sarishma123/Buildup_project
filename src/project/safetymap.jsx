@@ -1,11 +1,18 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { MapContainer, TileLayer, CircleMarker, Popup, useMapEvents } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "./SafetyMap.css";
-import { supabase } from "./supabaseClient";
 
 const KATHMANDU = [27.7172, 85.324];
 const TYPES = ["Harassment", "Stalking", "Poor lighting", "Unsafe place", "Other"];
+
+// Fake sample reports, only to show how the map will look
+const SAMPLE_REPORTS = [
+  { id: 1, type: "Poor lighting", time_of_day: "Night", note: "Street is very dark after 7 pm.", latitude: 27.7061, longitude: 85.3146 },
+  { id: 2, type: "Harassment", time_of_day: "Day", note: "Teasing near the bus stop.", latitude: 27.6933, longitude: 85.2814 },
+  { id: 3, type: "Unsafe place", time_of_day: "Night", note: "Empty road, no shops open.", latitude: 27.6784, longitude: 85.3492 },
+  { id: 4, type: "Stalking", time_of_day: "Night", note: "Followed while walking home.", latitude: 27.6946, longitude: 85.3213 },
+];
 
 // Lets the user click on the map to choose a place
 function ClickPicker({ onPick }) {
@@ -18,46 +25,32 @@ function ClickPicker({ onPick }) {
 }
 
 export default function SafetyMap() {
-  const [reports, setReports] = useState([]);
+  const [reports, setReports] = useState(SAMPLE_REPORTS);
   const [picked, setPicked] = useState(null);
   const [type, setType] = useState(TYPES[0]);
   const [timeOfDay, setTimeOfDay] = useState("Night");
   const [note, setNote] = useState("");
   const [message, setMessage] = useState("");
-  const [sending, setSending] = useState(false);
 
-  // Load approved reports when the page opens
-  useEffect(() => {
-    async function loadReports() {
-      const { data, error } = await supabase.from("reports").select("*");
-      if (!error) setReports(data);
-    }
-    loadReports();
-  }, []);
-
-  async function handleSubmit(e) {
+  function handleSubmit(e) {
     e.preventDefault();
     if (!picked) {
       setMessage("Please click on the map to choose the place first.");
       return;
     }
-    setSending(true);
-    const { error } = await supabase.from("reports").insert({
+    const newReport = {
+      id: Date.now(),
       type,
       time_of_day: timeOfDay,
       note: note.trim(),
-      latitude: Number(picked[0].toFixed(4)),
-      longitude: Number(picked[1].toFixed(4)),
-    });
-    setSending(false);
-
-    if (error) {
-      setMessage("Sorry, your report could not be sent. Please try again.");
-    } else {
-      setMessage("Thank you. Your report will appear on the map after it is checked.");
-      setPicked(null);
-      setNote("");
-    }
+      latitude: picked[0],
+      longitude: picked[1],
+      isNew: true,
+    };
+    setReports([...reports, newReport]);
+    setMessage("Thank you. Your report is added to the map.");
+    setPicked(null);
+    setNote("");
   }
 
   return (
@@ -67,12 +60,16 @@ export default function SafetyMap() {
         Step 1: click the place on the map. Step 2: fill the form and send. No
         name or login needed.
       </p>
+      <p className="sm-demo">
+        Demo version: the red circles are sample data, and new reports are
+        removed when you refresh the page.
+      </p>
 
       <div className="sm-layout">
         <div id="map" className="sm-map">
           <MapContainer center={KATHMANDU} zoom={13} style={{ height: "100%", width: "100%" }}>
             <TileLayer
-              attribution='&copy; OpenStreetMap contributors'
+              attribution="&copy; OpenStreetMap contributors"
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
             <ClickPicker onPick={setPicked} />
@@ -82,7 +79,11 @@ export default function SafetyMap() {
                 key={r.id}
                 center={[r.latitude, r.longitude]}
                 radius={10}
-                pathOptions={{ color: "#b3261e", fillColor: "#b3261e", fillOpacity: 0.5 }}
+                pathOptions={
+                  r.isNew
+                    ? { color: "#c77700", fillColor: "#c77700", fillOpacity: 0.5 }
+                    : { color: "#b3261e", fillColor: "#b3261e", fillOpacity: 0.5 }
+                }
               >
                 <Popup>
                   <strong>{r.type}</strong> ({r.time_of_day})
@@ -135,8 +136,8 @@ export default function SafetyMap() {
             {picked ? "Place chosen on the map." : "No place chosen yet."}
           </p>
 
-          <button type="submit" className="btn btn-main" disabled={sending}>
-            {sending ? "Sending..." : "Send report"}
+          <button type="submit" className="btn btn-main">
+            Send report
           </button>
 
           {message && <p className="sm-message">{message}</p>}
