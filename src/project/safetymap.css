@@ -76,3 +76,12 @@
     height: 380px;
   }
 }
+
+.sm-demo {
+  background: var(--lilac);
+  border-left: 4px solid var(--sand);
+  padding: 10px 14px;
+  max-width: 36em;
+  margin-bottom: 24px;
+  font-size: 0.95rem;
+}
