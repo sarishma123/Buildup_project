@@ -61,7 +61,8 @@ export default function App() {
         </ul>
       </section>
 
-      <section id="help" className="section help">
+
+      <section id="help" className="section help"> <!-- Added a help section for immediate assistance -->
         <h2>Need help right now?</h2>
         <p>
           Call the police on <strong>100</strong>. For other helplines and legal
