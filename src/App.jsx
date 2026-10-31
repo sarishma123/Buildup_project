@@ -57,7 +57,7 @@ export default function App() {
           <li><strong>See the safety map.</strong> Find areas with many reports.</li>
           <li><strong>Filter by time.</strong> Check a place at day or at night.</li>
           <li><strong>Find help.</strong> Helplines, police, legal aid and counselors by district.</li>
-          <li><strong>Learn your rights.</strong> Short guides in Nepali and English.</li>
+          <li><strong>Learn your rights.</strong> Short guides in Nepali and English.</li>  ##made the last line more clear and concise
         </ul>
       </section>
 
