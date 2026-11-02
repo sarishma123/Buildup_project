@@ -1,4 +1,7 @@
 import "./App.css";
+import HelpDirectory from "./project/helpdirectory";
+import PanicPage from "./project/panicpage";
+import SafetyMap from "./project/safetymap";
 
 export default function App() {
   return (
@@ -57,7 +60,7 @@ export default function App() {
           <li><strong>See the safety map.</strong> Find areas with many reports.</li>
           <li><strong>Filter by time.</strong> Check a place at day or at night.</li>
           <li><strong>Find help.</strong> Helplines, police, legal aid and counselors by district.</li>
-          <li><strong>Learn your rights.</strong> Short guides in Nepali and English.</li>  ##made the last line more clear and concise
+          <li><strong>Learn your rights.</strong> Short guides in Nepali and English.</li>
         </ul>
       </section>
 
@@ -70,6 +73,10 @@ export default function App() {
         </p>
         <a href="#directory" className="btn btn-main">Open help directory</a>
       </section>
+
+      <SafetyMap />
+      <HelpDirectory />
+      <PanicPage />
 
       <footer className="footer">
         <p>SafeSadak is a community project. Reports are reviewed but cannot be guaranteed.</p>

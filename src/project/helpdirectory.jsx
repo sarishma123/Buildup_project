@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./HelpDirectory.css";
+import "./helpdirectory.css";
 
 // To add a new helpline, copy one block and change the text.
 // Always check a number yourself before adding it.

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { MapContainer, TileLayer, CircleMarker, Popup, useMapEvents } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import "./SafetyMap.css";
+import "./safetymap.css";
 
 const KATHMANDU = [27.7172, 85.324];
 const TYPES = ["Harassment", "Stalking", "Poor lighting", "Unsafe place", "Other"];

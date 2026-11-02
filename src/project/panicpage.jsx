@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from "react";
-import "./PanicPage.css";
+import { useCallback, useEffect, useRef, useState } from "react";
+import "./panicpage.css";
 
 const STORAGE_KEY = "safesadak_contact";
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -52,7 +52,7 @@ export default function PanicPage() {
   }
 
   // Prepare the HELP message with location and open the messages app
-  async function triggerPanic() {
+  const triggerPanic = useCallback(async () => {
     if (!contact || !contact.number) {
       setStatus("Please save an emergency contact first. You can still call 100.");
       return;
@@ -66,19 +66,21 @@ export default function PanicPage() {
     setSmsHref(href);
     setStatus("Message is ready. Press send in your messages app.");
     window.location.href = href;
-  }
+  }, [contact]);
 
   // Countdown before the voice alert is sent
   useEffect(() => {
     if (countdown === null) return;
-    if (countdown === 0) {
-      setCountdown(null);
-      triggerPanic();
-      return;
-    }
-    const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
+    const timer = setTimeout(() => {
+      if (countdown === 0) {
+        setCountdown(null);
+        void triggerPanic();
+      } else {
+        setCountdown(countdown - 1);
+      }
+    }, 1000);
     return () => clearTimeout(timer);
-  }, [countdown]);
+  }, [countdown, triggerPanic]);
 
   function startListening() {
     if (!SpeechRecognition) {
