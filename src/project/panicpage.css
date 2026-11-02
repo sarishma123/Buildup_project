@@ -1,0 +1,139 @@
+.pp-warning {
+  background: var(--lilac);
+  border-left: 4px solid var(--sand);
+  padding: 12px 16px;
+  max-width: 40em;
+  margin-bottom: 28px;
+}
+
+.pp-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.pp-panic,
+.pp-call {
+  font: inherit;
+  font-size: 1.2rem;
+  font-weight: 700;
+  padding: 22px 30px;
+  border-radius: 10px;
+  cursor: pointer;
+  border: none;
+  text-align: center;
+}
+
+.pp-panic {
+  background: #b3261e;
+  color: var(--white);
+  flex: 1 1 260px;
+}
+
+.pp-call {
+  background: var(--plum);
+  color: var(--white);
+  flex: 1 1 200px;
+}
+
+.pp-panic:focus-visible,
+.pp-call:focus-visible,
+.pp-cancel:focus-visible {
+  outline: 4px solid var(--sand);
+  outline-offset: 3px;
+}
+
+.pp-voice,
+.pp-form {
+  max-width: 28em;
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pp-voice h3,
+.pp-form h3 {
+  color: var(--plum);
+}
+
+.pp-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-weight: 700;
+  color: var(--plum);
+}
+
+.pp-form input {
+  font: inherit;
+  font-weight: 400;
+  padding: 10px;
+  border: 1px solid #b9aacb;
+  border-radius: 6px;
+}
+
+.pp-plain {
+  border: none;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+  align-self: flex-start;
+}
+
+.pp-dark {
+  color: var(--plum);
+  border-color: var(--plum);
+  background: none;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+  align-self: flex-start;
+}
+
+.pp-status {
+  margin-top: 24px;
+  font-weight: 700;
+  color: var(--plum);
+}
+
+/* Countdown screen */
+.pp-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(59, 42, 77, 0.96);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.pp-overlay-box {
+  text-align: center;
+  color: var(--white);
+  padding: 24px;
+}
+
+.pp-overlay-box p {
+  font-size: 1.3rem;
+}
+
+.pp-count {
+  font-size: 7rem;
+  font-weight: 700;
+  line-height: 1.1;
+  margin: 10px 0 24px;
+}
+
+.pp-cancel {
+  font: inherit;
+  font-size: 1.2rem;
+  font-weight: 700;
+  padding: 18px 32px;
+  border: none;
+  border-radius: 10px;
+  background: var(--sand);
+  color: var(--plum);
+  cursor: pointer;
+}
