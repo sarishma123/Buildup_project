@@ -1,0 +1,48 @@
+.rt-intro {
+  max-width: 36em;
+  margin-bottom: 24px;
+}
+
+.rt-list {
+  max-width: 46em;
+}
+
+.rt-item {
+  border: 1px solid #ddd3e8;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  background: var(--white);
+}
+
+.rt-item summary {
+  cursor: pointer;
+  padding: 16px 18px;
+  font-weight: 700;
+  color: var(--plum);
+  font-size: 1.05rem;
+}
+
+.rt-item summary:focus-visible {
+  outline: 3px solid var(--sand);
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+.rt-item[open] summary {
+  border-bottom: 1px solid #ddd3e8;
+}
+
+.rt-item ul {
+  padding: 14px 18px 18px 38px;
+}
+
+.rt-item li {
+  margin-bottom: 10px;
+}
+
+.rt-note {
+  margin-top: 24px;
+  max-width: 36em;
+  font-weight: 700;
+  color: var(--plum);
+}
