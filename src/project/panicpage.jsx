@@ -1,5 +1,6 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-import "./panicpage.css";
+import { useEffect, useRef, useState } from "react";
+import "./PanicPage.css";
+import { useLang } from "./LanguageContext";
 
 const STORAGE_KEY = "safesadak_contact";
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -26,6 +27,7 @@ function getLocationLink() {
 }
 
 export default function PanicPage() {
+  const { t } = useLang();
   const [contact, setContact] = useState(loadContact());
   const [name, setName] = useState(contact ? contact.name : "");
   const [number, setNumber] = useState(contact ? contact.number : "");
@@ -44,58 +46,55 @@ export default function PanicPage() {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
     } catch {
-      setStatus("Could not save the contact on this browser.");
+      setStatus(t("panic.saveFail"));
       return;
     }
     setContact(saved);
-    setStatus("Emergency contact saved.");
+    setStatus(t("panic.contactSaved"));
   }
 
   // Prepare the HELP message with location and open the messages app
-  const triggerPanic = useCallback(async () => {
+  async function triggerPanic() {
     if (!contact || !contact.number) {
-      setStatus("Please save an emergency contact first. You can still call 100.");
+      setStatus(t("panic.needContact"));
       return;
     }
-    setStatus("Finding your location...");
+    setStatus(t("panic.findingLoc"));
     const link = await getLocationLink();
-    const text = link
-      ? `HELP! I need help. My location: ${link}`
-      : "HELP! I need help. I could not get my location.";
+    const text = link ? t("panic.msgLoc") + link : t("panic.msgNoLoc");
     const href = `sms:${contact.number}?body=${encodeURIComponent(text)}`;
     setSmsHref(href);
-    setStatus("Message is ready. Press send in your messages app.");
+    setStatus(t("panic.msgReady"));
     window.location.href = href;
-  }, [contact]);
+  }
 
   // Countdown before the voice alert is sent
   useEffect(() => {
     if (countdown === null) return;
-    const timer = setTimeout(() => {
-      if (countdown === 0) {
-        setCountdown(null);
-        void triggerPanic();
-      } else {
-        setCountdown(countdown - 1);
-      }
-    }, 1000);
+    if (countdown === 0) {
+      setCountdown(null);
+      triggerPanic();
+      return;
+    }
+    const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
     return () => clearTimeout(timer);
-  }, [countdown, triggerPanic]);
+  }, [countdown]);
 
   function startListening() {
     if (!SpeechRecognition) {
-      setStatus("Voice is not supported in this browser. Please use Chrome.");
+      setStatus(t("panic.noVoice"));
       return;
     }
+    const triggers = t("panic.triggers");
     const rec = new SpeechRecognition();
     rec.continuous = true;
     rec.interimResults = true;
-    rec.lang = "en-US";
+    rec.lang = t("panic.speechLang");
 
     rec.onresult = (e) => {
       for (let i = e.resultIndex; i < e.results.length; i++) {
         const heard = e.results[i][0].transcript.toLowerCase();
-        if (heard.includes("help")) {
+        if (triggers.some((word) => heard.includes(word))) {
           setCountdown((c) => (c === null ? 5 : c));
           return;
         }
@@ -106,7 +105,7 @@ export default function PanicPage() {
       if (e.error === "not-allowed") {
         wantListening.current = false;
         setListening(false);
-        setStatus("Microphone is blocked. Please allow it in your browser.");
+        setStatus(t("panic.micBlocked"));
       }
     };
 
@@ -127,14 +126,14 @@ export default function PanicPage() {
     recognition.current = rec;
     rec.start();
     setListening(true);
-    setStatus('Listening. Say "help" to start the alert.');
+    setStatus(t("panic.listening"));
   }
 
   function stopListening() {
     wantListening.current = false;
     if (recognition.current) recognition.current.stop();
     setListening(false);
-    setStatus("Voice listening stopped.");
+    setStatus(t("panic.voiceStopped"));
   }
 
   // Stop the microphone when leaving the page
@@ -147,56 +146,49 @@ export default function PanicPage() {
 
   return (
     <section id="panic" className="section">
-      <h2>Panic helper</h2>
+      <h2>{t("panic.title")}</h2>
 
-      <p className="pp-warning">
-        This is a helper, not a replacement for the police. It works only while
-        this page is open and the screen is on. You must still press send on
-        the message. In danger, call 100.
-      </p>
+      <p className="pp-warning">{t("panic.warning")}</p>
 
       <div className="pp-actions">
         <button className="pp-panic" onClick={triggerPanic}>
-          Send HELP to my contact
+          {t("panic.sendBtn")}
         </button>
         <a href="tel:100" className="pp-call">
-          Call police (100)
+          {t("panic.callBtn")}
         </a>
       </div>
 
       {smsHref && (
         <p>
           <a href={smsHref} className="btn btn-main">
-            Open the message again
+            {t("panic.openAgain")}
           </a>
         </p>
       )}
 
       <div className="pp-voice">
-        <h3>Voice trigger</h3>
-        <p>
-          Say "help" and a 5 second countdown starts. You can cancel it, so a
-          false alarm does not send anything.
-        </p>
+        <h3>{t("panic.voiceTitle")}</h3>
+        <p>{t("panic.voiceText")}</p>
         {listening ? (
           <button className="btn btn-light pp-dark" onClick={stopListening}>
-            Stop listening
+            {t("panic.stopListen")}
           </button>
         ) : (
           <button className="btn btn-main pp-plain" onClick={startListening}>
-            Start listening
+            {t("panic.startListen")}
           </button>
         )}
       </div>
 
       <form className="pp-form" onSubmit={saveContact}>
-        <h3>Emergency contact</h3>
+        <h3>{t("panic.contactTitle")}</h3>
         <label>
-          Name
+          {t("panic.name")}
           <input value={name} onChange={(e) => setName(e.target.value)} required />
         </label>
         <label>
-          Phone number
+          {t("panic.phone")}
           <input
             type="tel"
             value={number}
@@ -205,9 +197,9 @@ export default function PanicPage() {
           />
         </label>
         <button type="submit" className="btn btn-main pp-plain">
-          Save contact
+          {t("panic.save")}
         </button>
-        <small>Saved only on this phone. We never send it to a server.</small>
+        <small>{t("panic.saveNote")}</small>
       </form>
 
       <p className="pp-status" aria-live="polite">
@@ -217,10 +209,10 @@ export default function PanicPage() {
       {countdown !== null && (
         <div className="pp-overlay" role="alertdialog" aria-live="assertive">
           <div className="pp-overlay-box">
-            <p>Sending alert in</p>
+            <p>{t("panic.sendingIn")}</p>
             <div className="pp-count">{countdown}</div>
             <button className="pp-cancel" onClick={() => setCountdown(null)}>
-              Cancel, I am safe
+              {t("panic.cancel")}
             </button>
           </div>
         </div>

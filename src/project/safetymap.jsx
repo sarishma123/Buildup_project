@@ -1,17 +1,19 @@
 import { useState } from "react";
 import { MapContainer, TileLayer, CircleMarker, Popup, useMapEvents } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import "./safetymap.css";
+import "./SafetyMap.css";
+import { useLang } from "./languageContext";
 
 const KATHMANDU = [27.7172, 85.324];
-const TYPES = ["Harassment", "Stalking", "Poor lighting", "Unsafe place", "Other"];
+const TYPE_IDS = ["harassment", "stalking", "poorLighting", "unsafe", "other"];
+const TIME_IDS = ["day", "night"];
 
 // Fake sample reports, only to show how the map will look
 const SAMPLE_REPORTS = [
-  { id: 1, type: "Poor lighting", time_of_day: "Night", note: "Street is very dark after 7 pm.", latitude: 27.7061, longitude: 85.3146 },
-  { id: 2, type: "Harassment", time_of_day: "Day", note: "Teasing near the bus stop.", latitude: 27.6933, longitude: 85.2814 },
-  { id: 3, type: "Unsafe place", time_of_day: "Night", note: "Empty road, no shops open.", latitude: 27.6784, longitude: 85.3492 },
-  { id: 4, type: "Stalking", time_of_day: "Night", note: "Followed while walking home.", latitude: 27.6946, longitude: 85.3213 },
+  { id: 1, type: "poorLighting", time: "night", latitude: 27.7061, longitude: 85.3146 },
+  { id: 2, type: "harassment", time: "day", latitude: 27.6933, longitude: 85.2814 },
+  { id: 3, type: "unsafe", time: "night", latitude: 27.6784, longitude: 85.3492 },
+  { id: 4, type: "stalking", time: "night", latitude: 27.6946, longitude: 85.3213 },
 ];
 
 // Lets the user click on the map to choose a place
@@ -25,45 +27,40 @@ function ClickPicker({ onPick }) {
 }
 
 export default function SafetyMap() {
+  const { t } = useLang();
   const [reports, setReports] = useState(SAMPLE_REPORTS);
   const [picked, setPicked] = useState(null);
-  const [type, setType] = useState(TYPES[0]);
-  const [timeOfDay, setTimeOfDay] = useState("Night");
+  const [type, setType] = useState(TYPE_IDS[0]);
+  const [time, setTime] = useState("night");
   const [note, setNote] = useState("");
   const [message, setMessage] = useState("");
 
   function handleSubmit(e) {
     e.preventDefault();
     if (!picked) {
-      setMessage("Please click on the map to choose the place first.");
+      setMessage(t("map.pickFirst"));
       return;
     }
     const newReport = {
       id: Date.now(),
       type,
-      time_of_day: timeOfDay,
+      time,
       note: note.trim(),
       latitude: picked[0],
       longitude: picked[1],
       isNew: true,
     };
     setReports([...reports, newReport]);
-    setMessage("Thank you. Your report is added to the map.");
+    setMessage(t("map.thanks"));
     setPicked(null);
     setNote("");
   }
 
   return (
     <section id="report" className="section">
-      <h2>Report an incident</h2>
-      <p className="sm-intro">
-        Step 1: click the place on the map. Step 2: fill the form and send. No
-        name or login needed.
-      </p>
-      <p className="sm-demo">
-        Demo version: the red circles are sample data, and new reports are
-        removed when you refresh the page.
-      </p>
+      <h2>{t("map.title")}</h2>
+      <p className="sm-intro">{t("map.intro")}</p>
+      <p className="sm-demo">{t("map.demo")}</p>
 
       <div className="sm-layout">
         <div id="map" className="sm-map">
@@ -86,9 +83,9 @@ export default function SafetyMap() {
                 }
               >
                 <Popup>
-                  <strong>{r.type}</strong> ({r.time_of_day})
+                  <strong>{t("map.types." + r.type)}</strong> ({t("map.times." + r.time)})
                   <br />
-                  {r.note}
+                  {r.isNew ? r.note : t("map.sampleNotes")[r.id - 1]}
                 </Popup>
               </CircleMarker>
             ))}
@@ -105,39 +102,42 @@ export default function SafetyMap() {
 
         <form className="sm-form" onSubmit={handleSubmit}>
           <label>
-            What happened?
+            {t("map.whatHappened")}
             <select value={type} onChange={(e) => setType(e.target.value)}>
-              {TYPES.map((t) => (
-                <option key={t}>{t}</option>
+              {TYPE_IDS.map((id) => (
+                <option key={id} value={id}>
+                  {t("map.types." + id)}
+                </option>
               ))}
             </select>
           </label>
 
           <label>
-            Time of day
-            <select value={timeOfDay} onChange={(e) => setTimeOfDay(e.target.value)}>
-              <option>Day</option>
-              <option>Night</option>
+            {t("map.timeOfDay")}
+            <select value={time} onChange={(e) => setTime(e.target.value)}>
+              {TIME_IDS.map((id) => (
+                <option key={id} value={id}>
+                  {t("map.times." + id)}
+                </option>
+              ))}
             </select>
           </label>
 
           <label>
-            Short note (optional)
+            {t("map.note")}
             <textarea
               rows="4"
               maxLength="300"
               value={note}
               onChange={(e) => setNote(e.target.value)}
-              placeholder="Do not write names or phone numbers."
+              placeholder={t("map.notePlaceholder")}
             />
           </label>
 
-          <p className="sm-place">
-            {picked ? "Place chosen on the map." : "No place chosen yet."}
-          </p>
+          <p className="sm-place">{picked ? t("map.placeChosen") : t("map.noPlace")}</p>
 
           <button type="submit" className="btn btn-main">
-            Send report
+            {t("map.send")}
           </button>
 
           {message && <p className="sm-message">{message}</p>}
