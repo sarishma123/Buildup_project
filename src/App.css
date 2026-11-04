@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Noto+Sans+Devanagari:wght@400;700&display=swap");
 
 :root {
   --plum: #3b2a4d;
@@ -20,7 +20,7 @@ html {
 }
 
 body {
-  font-family: "Atkinson Hyperlegible", Arial, sans-serif;
+  font-family: "Atkinson Hyperlegible", "Noto Sans Devanagari", Arial, sans-serif;
   color: var(--text);
   background: var(--white);
   line-height: 1.6;
@@ -194,4 +194,21 @@ a:focus-visible {
   html {
     scroll-behavior: auto;
   }
+}
+
+/* Language button */
+.lang-btn {
+  font: inherit;
+  font-weight: 700;
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: 2px solid var(--white);
+  background: none;
+  color: var(--white);
+  cursor: pointer;
+}
+
+.lang-btn:focus-visible {
+  outline: 3px solid var(--sand);
+  outline-offset: 3px;
 }
