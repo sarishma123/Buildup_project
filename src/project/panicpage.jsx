@@ -58,7 +58,7 @@ export default function PanicPage() {
     if (!contact || !contact.number) {
       setStatus(t("panic.needContact"));
       return;
-    }, [contact, t]);
+    }
     setStatus(t("panic.findingLoc"));
     const link = await getLocationLink();
     const text = link ? t("panic.msgLoc") + link : t("panic.msgNoLoc");
@@ -66,7 +66,7 @@ export default function PanicPage() {
     setSmsHref(href);
     setStatus(t("panic.msgReady"));
     window.location.href = href;
-  }
+  }, [contact, t]);
 
   // Countdown before the voice alert is sent
   useEffect(() => {
