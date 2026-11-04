@@ -76,6 +76,7 @@ export default function App() {
       </section>
 
       <SafetyMap />
+      <RightsTips />
       <HelpDirectory />
       <PanicPage />
 
