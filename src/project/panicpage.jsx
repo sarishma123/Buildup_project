@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import "./panicpage.css";
-import { useLang } from "./languagecontext";
+import useLang from "./uselanguage";
 
 const STORAGE_KEY = "safesadak_contact";
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -72,9 +72,11 @@ export default function PanicPage() {
   useEffect(() => {
     if (countdown === null) return;
     if (countdown === 0) {
-      setCountdown(null);
-      triggerPanic();
-      return;
+      const timer = setTimeout(() => {
+        setCountdown(null);
+        triggerPanic();
+      }, 0);
+      return () => clearTimeout(timer);
     }
     const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
     return () => clearTimeout(timer);

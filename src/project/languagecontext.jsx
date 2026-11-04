@@ -1,7 +1,6 @@
-import { createContext, useContext, useState } from "react";
+import { useState } from "react";
 import translations from "./traslation";
-
-const LanguageContext = createContext(null);
+import LanguageContext from "./languagecontext";
 
 function loadLang() {
   try {
@@ -37,8 +36,4 @@ export function LanguageProvider({ children }) {
       {children}
     </LanguageContext.Provider>
   );
-}
-
-export function useLang() {
-  return useContext(LanguageContext);
 }

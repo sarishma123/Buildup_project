@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./helpdirectory.css";
-import { useLang } from "./languagecontext";
+import useLang from "./uselanguage";
 
 // Phone numbers stay here. The names and descriptions are in translations.js
 // in the same order. Always check a number yourself before adding it.

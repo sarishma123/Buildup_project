@@ -2,7 +2,7 @@ import { useState } from "react";
 import { MapContainer, TileLayer, CircleMarker, Popup, useMapEvents } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import "./safetymap.css";
-import { useLang } from "./languageContext";
+import useLang from "./uselanguage";
 
 const KATHMANDU = [27.7172, 85.324];
 const TYPE_IDS = ["harassment", "stalking", "poorLighting", "unsafe", "other"];

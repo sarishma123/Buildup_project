@@ -1,5 +1,6 @@
 import "./App.css";
-import { LanguageProvider, useLang } from "./project/languagecontext";
+import { LanguageProvider } from "./project/languagecontext";
+import useLang from "./project/uselanguage";
 import SafetyMap from "./project/safetymap";
 import PanicPage from "./project/panicpage";
 import RightsTips from "./project/righttips";
