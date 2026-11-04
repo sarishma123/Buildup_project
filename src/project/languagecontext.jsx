@@ -1,6 +1,6 @@
 import { useState } from "react";
 import translations from "./traslation";
-import LanguageContext from "./languagecontext";
+import LanguageContext from "./language-context";
 
 function loadLang() {
   try {

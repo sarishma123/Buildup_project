@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import "./panicpage.css";
 import useLang from "./uselanguage";
 
@@ -54,11 +54,11 @@ export default function PanicPage() {
   }
 
   // Prepare the HELP message with location and open the messages app
-  async function triggerPanic() {
+  const triggerPanic = useCallback(async () => {
     if (!contact || !contact.number) {
       setStatus(t("panic.needContact"));
       return;
-    }
+    }, [contact, t]);
     setStatus(t("panic.findingLoc"));
     const link = await getLocationLink();
     const text = link ? t("panic.msgLoc") + link : t("panic.msgNoLoc");
@@ -80,7 +80,7 @@ export default function PanicPage() {
     }
     const timer = setTimeout(() => setCountdown(countdown - 1), 1000);
     return () => clearTimeout(timer);
-  }, [countdown]);
+  }, [countdown, triggerPanic]);
 
   function startListening() {
     if (!SpeechRecognition) {
