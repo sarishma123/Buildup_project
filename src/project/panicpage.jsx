@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import "./PanicPage.css";
-import { useLang } from "./LanguageContext";
+import "./panicpage.css";
+import { useLang } from "./languagecontext";
 
 const STORAGE_KEY = "safesadak_contact";
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;

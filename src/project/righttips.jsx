@@ -1,5 +1,5 @@
-import "./RightsTips.css";
-import { useLang } from "./LanguageContext";
+import "./righttips.css";
+import { useLang } from "./languagecontext";
 
 export default function RightsTips() {
   const { t } = useLang();

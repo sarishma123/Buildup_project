@@ -1,9 +1,9 @@
 import "./App.css";
-import { LanguageProvider, useLang } from "./LanguageContext";
-import SafetyMap from "./SafetyMap";
-import PanicPage from "./PanicPage";
-import RightsTips from "./RightsTips";
-import HelpDirectory from "./HelpDirectory";
+import { LanguageProvider, useLang } from "./project/languagecontext";
+import SafetyMap from "./project/safetymap";
+import PanicPage from "./project/panicpage";
+import RightsTips from "./project/righttips";
+import HelpDirectory from "./project/helpdirectory";
 
 function Page() {
   const { t, lang, changeLang } = useLang();

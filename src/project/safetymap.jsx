@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { MapContainer, TileLayer, CircleMarker, Popup, useMapEvents } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import "./SafetyMap.css";
+import "./safetymap.css";
 import { useLang } from "./languageContext";
 
 const KATHMANDU = [27.7172, 85.324];
