@@ -2,6 +2,7 @@ import "./App.css";
 import HelpDirectory from "./project/helpdirectory";
 import PanicPage from "./project/panicpage";
 import SafetyMap from "./project/safetymap";
+import RightsTips from "./project/righttips";
 
 export default function App() {
   return (
