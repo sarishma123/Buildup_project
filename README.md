@@ -30,6 +30,6 @@ Safe Sadak is a safety-focused application designed to help women travel more co
 ### Installation
 
 ```bash
-git clone https://github.com/<your-username>/safe-sadak.git
+git clone https://github.com/sarishma123/safe-sadak.git
 cd safe-sadak
 npm install
