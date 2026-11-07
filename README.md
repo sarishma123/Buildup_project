@@ -1,35 +1,42 @@
 # Safe Sadak — Women’s Safety Platform
 
-Safe Sadak is a safety-focused application designed to help women travel more confidently by providing emergency assistance, location sharing, and safety resources.
+Safe Sadak is a bilingual women’s-safety web application for Nepal. It helps users find safety resources, view reported unsafe areas, access emergency contacts, and prepare an SOS message with their location.
+
+> This is an educational frontend project. It is not a replacement for emergency services.
 
 ## Features
 
-- SOS emergency alert
-- Live location sharing with trusted contacts
-- Nearby police stations, hospitals, and safe locations
-- Emergency contact management
-- Safety tips and resources
-- Route or area safety information
-- Simple, mobile-friendly interface
+- English and Nepali language support
+- Interactive Kathmandu safety map using OpenStreetMap
+- Unsafe-area reporting form
+- SOS message preparation with current location
+- Emergency-call shortcut
+- Emergency contact saved locally on the user’s device
+- Voice-triggered SOS countdown where browser support is available
+- Helpline directory
+- Women’s rights and safety tips
+- Responsive and accessibility-focused design
 
 ## Tech Stack
 
-- Frontend: [React / HTML-CSS-JavaScript / etc.]
-- Backend: [Node.js / Django / etc.]
-- Database: [MongoDB / Firebase / etc.]
-- Maps & Location: [Google Maps API / OpenStreetMap / etc.]
+- React
+- Vite
+- React Leaflet
+- Leaflet
+- OpenStreetMap
+- CSS
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js (version XX or later)
-- npm or yarn
-- API keys required for maps/location services
+- Node.js 18 or later
+- npm
 
 ### Installation
 
 ```bash
-git clone https://github.com/sarishma123/safe-sadak.git
-cd safe-sadak
+git clone https://github.com/sarishma123/Buildup_project.git
+cd Buildup_project
 npm install
+npm run dev
