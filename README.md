@@ -13,7 +13,7 @@ Safe Sadak is a bilingual women’s-safety web application for Nepal. It helps u
 - Emergency-call shortcut
 - Emergency contact saved locally on the user’s device
 - Voice-triggered SOS countdown where browser support is available
-- Helpline directory
+- Helpline directory for
 - Women’s rights and safety tips
 - Responsive and accessibility-focused design
 
