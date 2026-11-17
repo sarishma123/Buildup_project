@@ -98,7 +98,7 @@ SafeSadak/
 
 *Note: The structure above is illustrative. Adjust it to match the actual repository.*
 
-## 🔐 Privacy & Safety Considerations
+##  Privacy & Safety Considerations
 
 Safe Sadak is designed with user privacy and responsible safety practices in mind.
 
