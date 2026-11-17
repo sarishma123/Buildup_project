@@ -1,4 +1,4 @@
-# 🛡️Safe Sadak — Women's Safety Platform
+# Safe Sadak — Women's Safety Platform
 
 **Safe Sadak** is a bilingual women's safety web application designed to help women navigate public spaces more safely in Nepal.
 
