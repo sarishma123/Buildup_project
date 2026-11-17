@@ -32,7 +32,7 @@ The platform provides access to safety resources, emergency contacts, community-
 | OpenStreetMap | Map data and geographic information |
 | CSS | Styling and responsive layouts |
 
-## 🚀 Getting Started
+##  Getting Started
 
 Follow these steps to run Safe Sadak locally.
 
