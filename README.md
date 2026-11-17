@@ -6,7 +6,7 @@ The platform provides access to safety resources, emergency contacts, community-
 
 > **Note:** Safe Sadak is an educational frontend project. It does not replace official emergency services or guarantee personal safety.
 
-## ✨ Features
+##  Features
 
 - **Bilingual Interface:** Switch between English and Nepali.
 - **Interactive Safety Map:** Explore reported unsafe areas in Kathmandu using OpenStreetMap.
